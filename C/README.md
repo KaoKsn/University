@@ -1,4 +1,4 @@
-## Welcome to the ***C*** 
+## Welcome to ***C*** 
 This folder contains C programs in accordance to the respective lab session number.
 
 

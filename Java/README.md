@@ -1,2 +1,9 @@
-#  Welcome to "Java" Repository
-This repository consists of JAVA programs from the first semester of college and programs that are just focused on lab programs for lab test.
+##  Welcome to "Java" 
+This folder contains ***JAVA*** programs from `First Semester` in accordance to the unit number in which they were covered.
+<br>
+The classes were conducted by : ***Dr. Yogish H K***
+
+
+---
+
+This is a folder present in the ***First-Semester-C-Java*** repository.
