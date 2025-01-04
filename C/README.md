@@ -6,6 +6,6 @@ The classes were conducted by: ***Dr. Dayanand R B***
 --- 
 
 
-This is a folder present in the ***First-Semester-C-Java*** repository.
+This folder is a part of the ***First-Semester-C-Java*** repository.
 
 
