@@ -6,10 +6,13 @@
 
 int main(void)
 {
+	// Getting the radius of circle from the user.
 	int r;
 	printf("Enter the radius of your circle:\n");
 	scanf("%f",&r);
-	printf("The area of your circle is: %.3f\n",pi*r*r);
-	printf("The circumference of your cirlce is: %.3f\n",2*pi*r);
+
+	// Displaying the value of area and circumference of the circle of users choice.
+	printf("The area of your circle is: %.3f sq.units\n",pi*r*r);
+	printf("The circumference of your cirlce is: %.3f units\n",2*pi*r);
 	printf("Thanks\n");
 }

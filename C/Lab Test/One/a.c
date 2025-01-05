@@ -6,6 +6,8 @@
 int main(void)
 {
 		float tempc,tempf;
+		
+		// Getting the users choice.
 		do
 		{
 				int choice;
@@ -13,6 +15,7 @@ int main(void)
 				scanf("%d",&choice);
 		}while(choice!=1 || choice!=2)
 
+		// Converting based on the users choice.
 		switch(choice)
 		{
 			case 1: 
