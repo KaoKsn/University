@@ -51,12 +51,22 @@ class circle extends shape
 class twelve
 {
 	public static void main(String args[])
-	{
+	{  
+		shape ref;
+		ref = new triangle();
+		ref.area();
+		ref= new rectangle();
+		ref.area();
+		ref= new circle();
+		ref.area();
+
+		/* Or
 		triangle objt = new triangle();
 		objt.area();
 		rectangle objr = new rectangle();
 		objr.area();
 		circle objc = new circle();
 		objc.area();
+		*/
 	}
 }
