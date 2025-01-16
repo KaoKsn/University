@@ -12,6 +12,8 @@ class fibonacci
 		{
 
 				System.out.print(n1 + "  " + n2 + "  ");
+
+				// Using the for loop.
 				for(int i=2;i<x;i++)
 				{
 						n3=n1+n2;
@@ -19,6 +21,19 @@ class fibonacci
 						n1=n2;
 						n2=n3;
 				}
+
+
+				/* Using the while loop
+				   int i=2;
+				   while(i<x)
+				   {
+				   n3=n1+n2;
+				   System.out.println(n3);
+				   n1=n2;
+				   n2=n3;
+				   i++;
+				   } 
+				 */
 		}
 }
 class two
