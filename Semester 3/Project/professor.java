@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 class players
 {
+	final int T_QUESTIONS = 10;
 	Scanner input = new Scanner(System.in);
 
 	int level, score;
@@ -54,7 +55,7 @@ class players
 		boolean right = false;
 
 		// Generate 10 random questions.
-		while (q_index < 10)
+		while (q_index < T_QUESTIONS)
 		{
 			int x = random_number_generator(level), y = random_number_generator(level);
 			r_answer = x+y;
