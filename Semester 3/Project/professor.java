@@ -6,14 +6,20 @@ import java.util.Scanner;
 
 
 class players
-{
-	final int T_QUESTIONS = 10;	/* Ensure only 10 questions are asked for any given level */
-	final byte EOF = -1;	/* Return value to indicate <Ctrl + D> */
-
-	Scanner input = new Scanner(System.in);
-
+{	
+	/********** Instance Variables ************/
 	int level, score;
 	char operator;
+
+
+	/********** Constants ***********/
+	final int T_QUESTIONS = 10;		/* Ensure only 10 questions are asked for any given level */
+	final byte EOF = -1;			/* Return value to indicate <Ctrl + D> */
+
+
+	Scanner input = new Scanner(System.in);
+	Random r_generator = new Random();
+
 
 	// Initialize a player with level 0 and score 0.
 	players()
@@ -24,17 +30,20 @@ class players
 		operator = '+';
 	}
 
+	
+	/********** Methods ***********/
+
 	// A function that implements taking input from the user.
 	void get_operator()
 	{
-		char valid_operators[] = {'+', '-', '*', '/'};
+		char valid_operators[] = {'+', '-', '*', '%'};
 		String buffer = "";
 
 		System.out.println();
 
 		while (true)
 		{
-			System.out.print("Operator [ +, - , *, / ]: ");
+			System.out.print("Operator [ +, - , *, % ]: ");
 			
 			// Read the input string.
 			try
@@ -93,7 +102,7 @@ class players
 				System.exit(EOF);
 			}
 			
-			// break the loop if you get a valid input.
+			// break the loop on reading a valid input.
 			if (level <= 0 || level/4 != 0) 
 				continue;
 
@@ -103,17 +112,45 @@ class players
 	
 	void play()
 	{
-		int q_index = 0, r_answer;
+		int q_index = 0, r_answer = 0;
+	
+		int answer = -1;	// User's answer.
 
 		// Generate 10 random questions.
 		while (q_index < T_QUESTIONS)
 		{
 			boolean right = false;
 
-			int x = random_number_generator(level), y = random_number_generator(level);
+			int x = random_number_generator(level), y;
 
-			r_answer = x+y;
-			int answer = -1;
+			// Handle division by zero in case of level 1.
+			if (level == 1)
+				y = r_generator.nextInt(1,9);
+			else
+				y = random_number_generator(level);
+
+			
+			// Initializer r_answer according to the operator selected.
+			switch (operator)
+			{
+				case '+':
+					r_answer = x+y;
+					break;
+
+				case '-':
+					r_answer = x-y;
+					break;
+
+				case '*':
+					r_answer = x*y;
+					break;
+
+				case '%':
+					r_answer = x%y;
+					break;
+				// No other case can occur. Already Error Handled.
+			}
+
 
 			System.out.println();
 
@@ -122,7 +159,9 @@ class players
 			{
 				while (true)
 				{
-					System.out.printf("%d + %d = ", x, y);
+					// Print the question according to the selected operator.
+					System.out.printf("%d %c %d = ", x, operator, y);
+
 					try
 					{
 						answer = input.nextInt();
@@ -133,6 +172,7 @@ class players
 						input.nextLine();
 						continue;
 					}
+					// Handle Ctrl + D.
 					catch (NoSuchElementException e)
 					{
 						System.out.println("\nEOF Read. Exiting....");
@@ -153,9 +193,9 @@ class players
 					System.out.println("EEE");
 			}
 
-			// If the user was unable to answer within three attempts. Print the right answer.
+			// If the user is unable to answer within three attempts. Print the right answer.
 			if (!right)
-				System.out.printf("%d + %d = %d\n", x, y, r_answer);
+				System.out.printf("%d %c %d = %d\n", x, operator, y, r_answer);
 
 			q_index++;
 		}
@@ -164,7 +204,6 @@ class players
 	// A function that generates a random number with respect according to the level.
 	int random_number_generator(int level)
 	{
-		Random r_generator = new Random();
 		if (level == 1)
 			return r_generator.nextInt(0, 9);
 		else
