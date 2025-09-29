@@ -7,16 +7,68 @@ import java.util.Scanner;
 
 class players
 {
-	final int T_QUESTIONS = 10;
+	final int T_QUESTIONS = 10;	/* Ensure only 10 questions are asked for any given level */
+	final byte EOF = -1;	/* Return value to indicate <Ctrl + D> */
+
 	Scanner input = new Scanner(System.in);
 
 	int level, score;
+	char operator;
 
 	// Initialize a player with level 0 and score 0.
 	players()
 	{
 		level = 0;
 		score = 0;
+		// Set addition as the default operation.
+		operator = '+';
+	}
+
+	// A function that implements taking input from the user.
+	void get_operator()
+	{
+		char valid_operators[] = {'+', '-', '*', '/'};
+		String buffer = "";
+
+		System.out.println();
+
+		while (true)
+		{
+			System.out.print("Operator [ +, - , *, / ]: ");
+			
+			// Read the input string.
+			try
+			{
+				buffer = input.nextLine().strip();
+			}
+			catch (NoSuchElementException e)
+			{
+				System.out.println("\nEOF Read. Exiting...");
+				System.exit(EOF);
+			}
+			
+			// Ensure handling inputs like *input.
+			if (buffer.length() != 1)
+				continue;
+
+			try
+			{
+				operator = buffer.charAt(0);
+			}
+			// Handle empty strings.
+			catch (StringIndexOutOfBoundsException e)
+			{
+				continue;
+			}
+
+
+			// Ensure that the inputs exists in the array of valid operators.
+			for(char op: valid_operators)
+			{
+				if (operator == op)
+					return;
+			}
+		}
 	}
 
 	// A function that implements taking input from the user.
@@ -38,7 +90,7 @@ class players
 			catch (NoSuchElementException e)
 			{
 				System.out.println("\nExiting....");
-				System.exit(-1);
+				System.exit(EOF);
 			}
 			
 			// break the loop if you get a valid input.
@@ -52,12 +104,14 @@ class players
 	void play()
 	{
 		int q_index = 0, r_answer;
-		boolean right = false;
 
 		// Generate 10 random questions.
 		while (q_index < T_QUESTIONS)
 		{
+			boolean right = false;
+
 			int x = random_number_generator(level), y = random_number_generator(level);
+
 			r_answer = x+y;
 			int answer = -1;
 
@@ -75,14 +129,14 @@ class players
 					}
 					catch (InputMismatchException e)
 					{
-						// Read the next line buffer to avoid infinite loop.
+						// Read the \n buffer to avoid infinite loop.
 						input.nextLine();
 						continue;
 					}
 					catch (NoSuchElementException e)
 					{
-						System.out.println("\nExiting....");
-						System.exit(-1);
+						System.out.println("\nEOF Read. Exiting....");
+						System.exit(EOF);
 					}
 					break;
 				}
@@ -135,6 +189,9 @@ class professor
 	public static void main(String args[])
 	{
 		players player = new players();
+
+		// Get the level from the user.
+		player.get_operator();
 
 		// Get the level from the user.
 		player.get_level();
