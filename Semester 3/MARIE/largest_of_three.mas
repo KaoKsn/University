@@ -1,0 +1,40 @@
+/ A simple program to find the largest among three integers.
+Input
+store x
+
+Input 
+Store y
+
+Input
+Store z
+
+subt x
+Skipcond 800 / If z > x, then check if z > y
+	Jump check_x_and_y
+
+	Load z
+	Subt y
+	Skipcond 800 / If z > y, z is the largest.
+		Jump largest_y
+
+		Load z
+		Output
+		Halt
+		
+check_x_and_y, Load x
+Subt y
+Skipcond 800 / If x > y, then x is the largest
+	Jump largest_y
+
+	Load x
+	Output
+	Halt
+
+largest_y, Load y
+Output
+Halt
+
+/ Variables.
+x, dec 0
+y, dec 0
+z, dec 0
