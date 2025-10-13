@@ -1,0 +1,15 @@
+/ Get the first input.
+Input
+Store x
+
+/ Get the second input.
+Input
+Store y
+
+Add x
+
+Output
+Halt
+
+x, dec 0
+y, dec 0
