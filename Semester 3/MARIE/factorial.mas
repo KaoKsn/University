@@ -1,0 +1,78 @@
+/ Read the input.
+Input
+Store X
+
+/ Find factorial using by adding.
+findfact, load X
+subt factcounter
+
+skipcond 800 / If X reached, stop multiplying i.e stop finding the factorial.
+	jump findfinalmul
+
+	/ Else, add factorial , factcounter number of times.
+	findmul, load mulcounter
+	add incrementer
+	store mulcounter
+
+	load factcounter
+	subt mulcounter
+
+	skipcond 800 / If number of times multiplied is less than factcounter, go on.
+		jump mulnextnumber / Else, successfully found the factorial till now, Check for the next number.
+	
+		load result
+		add factorial
+		store result
+		jump findmul
+
+
+	mulnextnumber, load result
+	store factorial
+
+	load factcounter
+	add incrementer
+	store factcounter
+
+	/ Initialize cruicial values to original values.
+	/ result
+	load initializer
+	store result
+	/ mulcounter
+	subt incrementer
+	store mulcounter
+
+	jump findfact
+
+
+/ factcounter is now n, so perform factorial * n. where factorial is fact(n-1)
+
+findfinalmul, load mulcounter
+add incrementer
+store mulcounter
+
+load factcounter
+subt mulcounter
+
+skipcond 800 /
+        jump printfactorial
+
+        load result
+        add factorial
+        store result
+        jump findfinalmul
+
+
+printfactorial, load result
+store factorial
+Output
+Halt
+
+X, DEC 0
+mulcounter, DEC -1
+result, Dec 0
+incrementer, dec 1
+
+factorial, dec 1
+factcounter, dec 2
+
+initializer, dec 0
