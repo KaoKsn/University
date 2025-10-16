@@ -1,10 +1,14 @@
 / Get the first input.
 Input
-store x
+skipcond 800 / Ensure a positive integer is read.
+	jump no_lcm
+	store x
 
 / Get the second input
 Input
-store y
+SkipCond 800
+	jump no_lcm
+	store y
 
 subt x
 
@@ -59,56 +63,34 @@ subt mulcounter
 
 
 / Finding the GCD of the numbers.
-/ Divide both x and y from 1 to smaller.
-find_gcd, load smaller
-subt divisor
+/ Using the Euclidean method.
 
-skipcond 800 / If divisor = smaller, stop and store the value of GCD.
-	jump print_lcm
+/ Performing larger % smaller
+find_gcd, load larger
+store modulo
 
-	/ divisor must start from 1, but better start from 2 since 1 is a universal divisor.
-	load divisor
-	add incrementer
-	store divisor
+find_modulo, load modulo
+		subt smaller
 
-	/ Divide the smaller number and check if exact division can happen.
-	load smaller
-	store p_smaller
+		skipcond 800 / If during repeated subtraction, you get a value <= 0. Stop dividing.
+		jump if_gcd_found
 
-	/ Continously subtracting divisor from number untill a value <0 is encountered.
-	division_loop_gcd_for_smaller, load p_smaller
-	subt divisor
-	store p_smaller
-	skipcond 800 / If p_smaller - divisor <= 0. then check for exact division.
-		jump is_exact_divisor_of_smaller
-		/ Go back to dividing.
-		jump division_loop_gcd_for_smaller
+		store modulo
+		jump find_modulo
 
-	is_exact_divisor_of_smaller, skipcond 400 / Check exact division.
-				jump find_gcd / If smaller % divisor != 0, then go to the next divisor.
-			
-				/ If the divisor is able to exactly divide smaller, look if it can exactly divide the larger value.
-				/ If it can, then store it as the gcd.
-				load larger
-				store p_larger
+	if_gcd_found, skipcond 000 	/ Check for exact division.
+				jump set_gcd 	/ If exact division occurs, then, GCD = smaller.
 
-				/ Continously subtracting divisor from number untill a value <0 is encountered.
-				division_loop_gcd_for_larger, load p_larger
-				subt divisor
-				store p_larger
-				skipcond 800 / If p_larger - divisor <= 0. then check for exact division.
-					jump is_exact_divisor_of_larger
-					/ Go back to dividing.
-					jump division_loop_gcd_for_larger
-
-	is_exact_divisor_of_larger, skipcond 400 / If it's an exact divisor of larger too, then update current divisor as the gcd.
-							jump find_gcd / If larger % divisor != 0, proceed with the next divisor.
-
-							load divisor
-							store gcd
-							jump find_gcd
-
-
+				/ Else, find GCD (smaller, larger % smaller)
+				load smaller
+				store larger
+				load modulo
+				store smaller
+				jump find_gcd
+					
+	set_gcd, load smaller
+			store gcd
+			 
 print_lcm, load product
 / (product/gcd) = lcm.
 / Basic Integer division - Only handles positive fractions properly.
@@ -156,10 +138,8 @@ p_product, dec 0 / Not required if it's ok to lose original value of product.
 mulcounter, dec 0
 
 smaller, dec 0
-p_smaller, dec 0
 larger, dec 0
-p_larger, dec 0
-divisor, dec 1 / Variable to find the GCD of the two numbers. Goes from 1 to the value lesser between x and y.
+modulo, dec 0
 
 lcm, dec 0
 gcd, dec 1
