@@ -1,3 +1,5 @@
+// 7 - Interfaces and multiple inheritance.
+import java.util.Scanner;
 interface CircleOps
 {
     double circleArea(double r);
@@ -29,11 +31,11 @@ class ShapeCalculator extends ShapeBase implements ShapeOps
     }
     public double circleArea(double r)
     {
-        return 2 * PI * r;
+        return PI * r * r;
     }
     public double circlePerimeter(double r)
     {
-        return PI * r * r;
+        return 2 * PI * r;
     }
     public double rectangleArea(double l, double b)
     {
@@ -54,31 +56,37 @@ class ShapesDemo
      {
           System.out.println("A general shape initialized!");
      }
-     static public void getCircle(CircleOps circle)
+     static public void getCircle(CircleOps circle, double r)
      {
-        System.out.println("Area: " + circle.circleArea(7));
-        System.out.println("Perimeter: " + circle.circlePerimeter(7));
+        System.out.println("Area: " + circle.circleArea(r));
+        System.out.println("Perimeter: " + circle.circlePerimeter(r));
      }
-     static public void getRectangle(RectangleOps rectangle)
+     static public void getRectangle(RectangleOps rectangle, double l,double b)
      {
-        System.out.println("Area: " + rectangle.rectangleArea(3, 4));
-        System.out.println("Perimeter: " + rectangle.rectanglePerimeter(4, 3));
+        System.out.println("Area: " + rectangle.rectangleArea(l, b));
+        System.out.println("Perimeter: " + rectangle.rectanglePerimeter(l, b));
      }
 
 }
-class interfaces
+class Interfaces
 {
     public static void main(String args[])
     {
+        Scanner in = new Scanner(System.in);
         ShapeCalculator calculator = new ShapeCalculator("Basic Shapes");
-
         ShapesDemo.getShape(calculator);
 
 	System.out.println("\n== Circle ==");
-        ShapesDemo.getCircle(calculator);
+        System.out.print("Radius: ");
+        double r = in.nextDouble();
+        ShapesDemo.getCircle(calculator, r);
 
 	System.out.println("\n== Rectangle ==");
-        ShapesDemo.getRectangle(calculator);
+        System.out.print("Length: ");
+        double l = in.nextDouble();
+        System.out.print("Breadth: ");
+        double b = in.nextDouble();
+        ShapesDemo.getRectangle(calculator, l, b);
         return;
     }
 }
